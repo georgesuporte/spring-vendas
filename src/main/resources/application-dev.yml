@@ -17,8 +17,11 @@ spring:
         dialect: org.hibernate.dialect.MySQL5Dialect
         format_sql: true
     show-sql: true
-
   security:
     user:
       name: teste
       password: teste
+  flyway:
+    user: root
+    password: root
+    schemas: vendas

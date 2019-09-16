@@ -17,3 +17,11 @@ spring:
         dialect: 
         format_sql: true
     show-sql: true
+  security:
+    user:
+      name: 
+      password: 
+  flyway:
+    user: 
+    password: 
+    schemas: 
