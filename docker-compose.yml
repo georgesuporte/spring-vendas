@@ -6,7 +6,7 @@ services:
     build: 
       context: .docker
       args:
-        - JAVA_HOME=${JAVA_HOME_DOCKER}
+        - JAVA_HOME_DOCKER=${JAVA_HOME_DOCKER}
     container_name: ${CONTAINER_NAME_API}
     restart: always
     volumes:

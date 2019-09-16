@@ -14,14 +14,14 @@ ARG gid=1000
 # =============================================================================
 # Set environment
 # =============================================================================
-ARG JAVA_HOME
+ARG JAVA_HOME_DOCKER=/opt/java/current
 ENV PATH ${PATH}:${JAVA_HOME_DOCKER}/bin
-
 # =============================================================================
 # Install package linux Dependency 
 # =============================================================================
 RUN apk update \
     && apk add --no-cache --virtual .build-deps \
+    bash \
     wget \
     curl \
     tar \
@@ -65,7 +65,6 @@ RUN mkdir -p /opt/java \
 # RUN update-java-alternatives -s java-8-oracle
 # RUN echo "export ${PATH}" >> ~/.bashrc
 # RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-RUN /bin/sh
 
 # =============================================================================
 # Clear Folder Tmp
@@ -73,10 +72,5 @@ RUN /bin/sh
 RUN rm -rf /tmp/*
 
 WORKDIR /
-
-# Cria a pasta da app
-# RUN mkdir -p /home/src/app
-
+ENTRYPOINT ["/bin/sh", "-c", "bash"]
 CMD ["/bin/sh"]
-
-#COPY ./ /home/src/app
