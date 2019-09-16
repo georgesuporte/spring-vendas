@@ -25,3 +25,5 @@ spring:
     user: root
     password: root
     schemas: vendas
+    url: jdbc:mysql://localhost:33066/vendas?useSSL=false
+    locations: filesystem:db/migration

@@ -24,4 +24,6 @@ spring:
   flyway:
     user: 
     password: 
-    schemas: 
+    schemas:
+    url:
+    locations:
