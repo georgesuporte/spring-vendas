@@ -55,6 +55,6 @@ build/
 hs_err_pid*
 
 # Custom
-.env
-./spring-vendas/db/**
-./spring-vendas/db
+**/.env
+**/db/**
+**/db

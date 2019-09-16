@@ -1,15 +1,20 @@
 version: "3"
 services:
  api:
-    build: .docker
+    env_file:
+     - ./.env
+    build: 
+      context: .docker
       args:
-        - JAVA_HOME=${JAVA_HOME}
+        - JAVA_HOME=${JAVA_HOME_DOCKER}
     container_name: ${CONTAINER_NAME_API}
     restart: always
     volumes:
-     - ./spring-vendas:/App:rw
-  db:
+     - ./:/App:rw
+ db:
     image: mysql:5.7
+    env_file:
+     - ./.env
     restart: always
     container_name: ${CONTAINER_NAME_DB}
     environment:
@@ -22,6 +27,9 @@ services:
     expose:
       - '3306'
     volumes:
-      - ./spring-vendas/db:/var/lib/mysql:rw
-   
+      - ./db:/var/lib/mysql:rw
+networks:
+  default:
+    external:
+      name: ${NETWORK_CONTAINER}
 

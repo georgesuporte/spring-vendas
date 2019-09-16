@@ -15,7 +15,7 @@ ARG gid=1000
 # Set environment
 # =============================================================================
 ARG JAVA_HOME
-ENV PATH ${PATH}:${JAVA_HOME}/bin
+ENV PATH ${PATH}:${JAVA_HOME_DOCKER}/bin
 
 # =============================================================================
 # Install package linux Dependency 
@@ -47,13 +47,16 @@ RUN curl -Lso /tmp/libz.tar.xz https://www.archlinux.org/packages/core/x86_64/zl
     && cp /tmp/libz/usr/lib/libz.so.* /usr/glibc-compat/lib
 
 # =============================================================================
-# Install Java SDK 11.0.2
+# Install Java SDK 11.0.4
 # =============================================================================
-RUN curl -sfLo  /tmp/jdk-11.0.2.tar.gz  -b "oraclelicense=a" http://download.oracle.com/otn-pub/java/jdk/11.0.2+9/f51449fcd52f4d52b93a989c5c56ed3c/jdk-11.0.2_linux-x64_bin.tar.gz -O \
-    && mkdir -p /opt/java \
-    && tar -zxvf /tmp/jdk-11.0.2.tar.gz  -C /opt/java \
-    && ln -s /opt/java/jdk-11.0.2 /opt/java/current \
-    && touch /etc/profile.d/java.sh | echo export JAVA_HOME=${JAVA_HOME} >> /etc/profile.d/java.sh | echo export PATH=${PATH} >> /etc/profile.d/java.sh \
+# @TODO Linha comentada download automatico.
+# RUN curl -sfLo  /tmp/jdk-11.0.4_linux-x64_bin.tar.gz  -b "oraclelicense=a" http://download.oracle.com/otn-pub/java/jdk/11.0.2+9/f51449fcd52f4d52b93a989c5c56ed3c/jdk-11.0.2_linux-x64_bin.tar.gz -O \
+
+ADD jdk/ /tmp/
+RUN mkdir -p /opt/java \
+    && tar -zxvf /tmp/jdk-11.0.4_linux-x64_bin.tar.gz  -C /opt/java \
+    && ln -s /opt/java/jdk-11.0.4 /opt/java/current \
+    && touch /etc/profile.d/java.sh | echo export JAVA_HOME=${JAVA_HOME_DOCKER} >> /etc/profile.d/java.sh | echo export PATH=${PATH} >> /etc/profile.d/java.sh \
     && sh /etc/profile.d/java.sh
 
 # =============================================================================
