@@ -1,0 +1,27 @@
+version: "3"
+services:
+ api:
+    build: .docker
+      args:
+        - JAVA_HOME=${JAVA_HOME}
+    container_name: ${CONTAINER_NAME_API}
+    restart: always
+    volumes:
+     - ./spring-vendas:/App:rw
+  db:
+    image: mysql:5.7
+    restart: always
+    container_name: ${CONTAINER_NAME_DB}
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - ${DB_PORT}
+    expose:
+      - '3306'
+    volumes:
+      - ./spring-vendas/db:/var/lib/mysql:rw
+   
+
