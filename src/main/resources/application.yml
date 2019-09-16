@@ -1,0 +1,6 @@
+# Actual environment
+spring:  
+    profiles:
+        active: development
+    application: 
+        name: application-dev.yml
