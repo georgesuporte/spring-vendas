@@ -1,6 +1,6 @@
 # Actual environment
 spring:  
     profiles:
-        active: development
+        active: dev
     application: 
         name: application-dev.yml

@@ -3,9 +3,9 @@
 server:
   port: 8090
 spring:
-  profiles: development
+  profiles: dev
   datasource:
-    driverClassName: com.mysql.jdbc.Driver
+    driverClassName: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:33066/vendas?useSSL=false
     password: root
     username: root
@@ -17,3 +17,8 @@ spring:
         dialect: org.hibernate.dialect.MySQL5Dialect
         format_sql: true
     show-sql: true
+
+  security:
+    user:
+      name: teste
+      password: teste

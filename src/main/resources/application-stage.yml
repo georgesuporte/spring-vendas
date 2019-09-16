@@ -3,7 +3,7 @@
 server:
   port: 8090
 spring:
-  profiles: production
+  profiles: stage
   datasource:
     driverClassName: 
     password: 
