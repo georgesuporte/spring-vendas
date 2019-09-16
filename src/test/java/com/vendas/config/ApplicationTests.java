@@ -1,4 +1,4 @@
-package com.vendas.demo;
+package com.vendas.config;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

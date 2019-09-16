@@ -1,13 +1,13 @@
-package com.vendas.demo;
+package com.vendas.config;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class GeorgeSilvaApplication {
+public class Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(GeorgeSilvaApplication.class, args);
+		SpringApplication.run(Application.class, args);
 	}
 
 }
