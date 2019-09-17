@@ -2,6 +2,9 @@
 # Development Profile 
 server:
   port: 8090
+  error:
+    whitelabel:
+      enabled: false
 spring:
   profiles: dev
   datasource:
@@ -27,3 +30,5 @@ spring:
     schemas: vendas
     url: jdbc:mysql://localhost:33066/vendas?useSSL=false
     locations: filesystem:db/migration
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.web.ErrorMvcAutoConfiguration
