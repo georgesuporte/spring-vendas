@@ -13,8 +13,9 @@ spring:
     password: root
     username: root
   jpa:
+    generate-ddl: true
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5Dialect

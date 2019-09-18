@@ -4,9 +4,8 @@ import lombok.Data;
 
 @Data
 public class PedidosItensDto {
-    private long idProduto;
-    private String produto;
+    private PedidosDto idPedidos;
     private int quantidade;
     private double valor;
-    private String subtotal;
+    private double subtotal;
 }
