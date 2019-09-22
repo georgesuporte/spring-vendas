@@ -2,6 +2,8 @@
 # Development Profile 
 server:
   port: 8090
+  servlet:
+     context-path: /vendas 
   error:
     whitelabel:
       enabled: false
@@ -25,6 +27,7 @@ spring:
     user:
       name: teste
       password: teste
+    ignored: /**
   flyway:
     user: root
     password: root

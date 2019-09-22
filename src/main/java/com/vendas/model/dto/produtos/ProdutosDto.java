@@ -1,9 +1,12 @@
-package com.vendas.dto;
+package com.vendas.model.dto.produtos;
+
+import com.vendas.model.dto.categoria.CategoriaCreationDTO;
+
 import lombok.Data;
 
 @Data
 public class ProdutosDto {
-    private CategoriaDto idCategoria;
+    private CategoriaCreationDTO idCategoria;
     private String produto;
     private String preco;
     private String quantidade;

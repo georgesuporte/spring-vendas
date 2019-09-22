@@ -1,4 +1,4 @@
-package com.vendas.dto;
+package com.vendas.model.dto.endereco;
 
 import lombok.Data;
 
