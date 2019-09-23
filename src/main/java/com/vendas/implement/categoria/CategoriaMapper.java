@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Mapper(componentModel="spring")
-public interface CategoriaMapperImpl {
+public interface CategoriaMapper {
 
     CategoriaMapperImpl INSTANCE = Mappers.getMapper(CategoriaMapperImpl.class);
 
@@ -31,4 +31,5 @@ public interface CategoriaMapperImpl {
     CategoriaEntity toCategoriaEntity(CategoriaCreationDTO categoriaCreationDTO);
 
     List<CategoriaCreationDTO> toListCategoriaCreationDTOs(List<CategoriaEntity> listCategoriaEntity);
+
 }
