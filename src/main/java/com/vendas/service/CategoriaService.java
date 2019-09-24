@@ -31,4 +31,9 @@ public class CategoriaService {
     public void deleteById(Long id) {
         CategoriaRespository.deleteById(id);
     }
+
+	public List<CategoriaEntity> findByCategoriaContaining(String nomeCategoria) {
+        return CategoriaRespository.findByCategoriaContaining(nomeCategoria);
+        
+	}
 }

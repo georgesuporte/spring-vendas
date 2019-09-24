@@ -11,8 +11,10 @@ import com.vendas.service.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,48 +36,46 @@ public class CategoriaController {
     private CategoriaMapper categoriaMapper;
 
     @GetMapping("/listar")
-    public ResponseEntity<List<CategoriaCreationDTO>> listar(){
+    public ResponseEntity<List<CategoriaCreationDTO>> listar() {
         return ResponseEntity.status(HttpStatus.OK).body(categoriaMapper.toListCategoriaCreationDTOs(categoriaService.findAll()));
     }
 
-    @GetMapping("/consultar/{id}")
+    @GetMapping("/consultar")
     public ResponseEntity<CategoriaCreationDTO> consultar(@RequestBody CategoriaCreationDTO categoriaID) {
         Optional<CategoriaEntity> result = categoriaService
                 .findById(categoriaMapper.toCategoriaEntity(categoriaID).getIdCategoria());
         if(result.get() != null) {
             return ResponseEntity.status(HttpStatus.OK).body(categoriaMapper.toCategoriaCreationDTO(result.get()));
         } else {
-            return ResponseEntity.status(HttpStatus.CREATED).body(null);
+            return ResponseEntity.status(HttpStatus.CREATED).build();
         }
     }
 
-    // @PostMapping("/categoria/search")
-    // public List<CategoriaEntity> search(@RequestBody Map<String, String> body){
-    //     String searchTerm = body.get("text");
-    //     return categoriaService.findByCategoriaContainingOrContentContaining(searchTerm, searchTerm);
-    // }
+    @PostMapping("/categoria/search")
+    public ResponseEntity<List<CategoriaCreationDTO>> search(@RequestBody CategoriaCreationDTO categoriaCreationDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(categoriaMapper.toListCategoriaCreationDTOs(categoriaService.findByCategoriaContaining(categoriaCreationDTO.getNomeCategoria())));
+    }
 
     @PostMapping(value="/cadastrar")
     public ResponseEntity<CategoriaCreationDTO> cadastrar(@RequestBody CategoriaCreationDTO categoriaCreationDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(categoriaMapper.toCategoriaCreationDTO(categoriaService.save(categoriaMapper.toCategoriaEntity(categoriaCreationDTO))));
     }
 
+   @PutMapping("/atualizar")
+   public ResponseEntity<CategoriaCreationDTO> update(@RequestBody CategoriaCreationDTO categoriaCreationDTO) {
+       Optional<CategoriaEntity> categoria = categoriaService.findById(categoriaCreationDTO.getId());
+       if(categoria.get() != null) {
+           return ResponseEntity.status(HttpStatus.NO_CONTENT).body(categoriaMapper.toCategoriaCreationDTO(categoriaService.save(categoriaMapper.toCategoriaEntity(categoriaCreationDTO))));
+       } else {
+           return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+       }
+   }
 
-    // @PutMapping("/atualizar/{id}")
-    // public CategoriaEntity update(@PathVariable String id, @RequestBody Map<String, String> body) {
-    //     int idCategoria = Integer.parseInt(id);
-    //     // getting blog
-    //     CategoriaEntity categoria = categoriaService.findOne(idCategoria);
-    //     categoria.setCategoria(body.get("categoria"));
-    //     return categoriaService.save(categoria);
-    // }
-
-    // @DeleteMapping("/deletar/{id}")
-    // public boolean delete(@PathVariable String id){
-    //     int categoria = Integer.parseInt(id);
-    //     categoriaService.deleteById(categoria);
-    //     return true;
-    // }
+    @DeleteMapping("/deletar")
+    public ResponseEntity<HttpStatus> delete(@RequestBody CategoriaCreationDTO categoriaCreationDTO) {
+        categoriaService.deleteById(categoriaMapper.toCategoriaEntity(categoriaCreationDTO).getIdCategoria());
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 
 
 }
