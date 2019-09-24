@@ -44,7 +44,7 @@ public class CategoriaController {
     public ResponseEntity<CategoriaCreationDTO> consultar(@RequestBody CategoriaCreationDTO categoriaID) {
         Optional<CategoriaEntity> result = categoriaService
                 .findById(categoriaMapper.toCategoriaEntity(categoriaID).getIdCategoria());
-        if(result.get() != null) {
+        if (result.get() != null) {
             return ResponseEntity.status(HttpStatus.OK).body(categoriaMapper.toCategoriaCreationDTO(result.get()));
         } else {
             return ResponseEntity.status(HttpStatus.CREATED).build();
@@ -53,27 +53,26 @@ public class CategoriaController {
 
     @PostMapping("/categoria/search")
     public ResponseEntity<List<CategoriaCreationDTO>> search(@RequestBody CategoriaCreationDTO categoriaCreationDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(categoriaMapper.toListCategoriaCreationDTOs(categoriaService.findByCategoriaContaining(categoriaCreationDTO.getNomeCategoria())));
+        return ResponseEntity.status(HttpStatus.CREATED).body(categoriaMapper.toListCategoriaCreationDTOs(
+                categoriaService.findByCategoriaContaining(categoriaCreationDTO.getNomeCategoria())));
     }
 
-    @PostMapping(value="/cadastrar")
+    @PostMapping(value = "/cadastrar")
     public ResponseEntity<CategoriaCreationDTO> cadastrar(@RequestBody CategoriaCreationDTO categoriaCreationDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(categoriaMapper.toCategoriaCreationDTO(categoriaService.save(categoriaMapper.toCategoriaEntity(categoriaCreationDTO))));
+        return ResponseEntity.status(HttpStatus.CREATED).body(categoriaMapper.toCategoriaCreationDTO(
+                categoriaService.save(categoriaMapper.toCategoriaEntity(categoriaCreationDTO))));
     }
 
-   @PutMapping("/atualizar")
-   public ResponseEntity<CategoriaCreationDTO> update(@RequestBody CategoriaCreationDTO categoriaCreationDTO) {
-       Optional<CategoriaEntity> categoria = categoriaService.findById(categoriaCreationDTO.getId());
-       if(categoria.get() != null) {
-           return ResponseEntity.status(HttpStatus.NO_CONTENT).body(categoriaMapper.toCategoriaCreationDTO(categoriaService.save(categoriaMapper.toCategoriaEntity(categoriaCreationDTO))));
-       } else {
-           return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-       }
-   }
+    @PutMapping("/atualizar")
+    public ResponseEntity<CategoriaCreationDTO> update(@RequestBody CategoriaCreationDTO categoriaCreationDTO) {
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(categoriaMapper.toCategoriaCreationDTO(
+                categoriaService.save(categoriaMapper.toCategoriaEntity(categoriaCreationDTO))));
+    }
 
     @DeleteMapping("/deletar")
     public ResponseEntity<HttpStatus> delete(@RequestBody CategoriaCreationDTO categoriaCreationDTO) {
-        categoriaService.deleteById(categoriaMapper.toCategoriaEntity(categoriaCreationDTO).getIdCategoria());
+        CategoriaEntity categoria = categoriaMapper.toCategoriaEntity(categoriaCreationDTO);
+        categoriaService.deleteById(categoria.getIdCategoria());
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 

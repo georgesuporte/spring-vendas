@@ -21,16 +21,14 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 
-
-@Data
 @ToString
-@Builder
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
