@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 @Mapper(componentModel="spring")
 public interface CategoriaMapper {
 
-    CategoriaMapperImpl INSTANCE = Mappers.getMapper(CategoriaMapperImpl.class);
+    CategoriaMapper INSTANCE = Mappers.getMapper(CategoriaMapper.class);
 
     
     @Mappings({

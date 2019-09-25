@@ -51,7 +51,7 @@ public class CategoriaController {
         }
     }
 
-    @PostMapping("/categoria/search")
+    @PostMapping("/pesquisar")
     public ResponseEntity<List<CategoriaCreationDTO>> search(@RequestBody CategoriaCreationDTO categoriaCreationDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(categoriaMapper.toListCategoriaCreationDTOs(
                 categoriaService.findByCategoriaContaining(categoriaCreationDTO.getNomeCategoria())));

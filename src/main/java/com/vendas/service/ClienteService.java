@@ -31,4 +31,8 @@ public class ClienteService {
     public void deleteById(Long id) {
         ClienteRespository.deleteById(id);
     }
+
+	public List<ClienteEntity> findByNomeContainingOrEmailContaining(String nomeCliente,String emailCliente ) {
+		return ClienteRespository.findByNomeContainingOrEmailContaining(nomeCliente, emailCliente);
+	}
 }

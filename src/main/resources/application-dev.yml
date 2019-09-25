@@ -17,7 +17,7 @@ spring:
   jpa:
     generate-ddl: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5Dialect
@@ -27,7 +27,6 @@ spring:
     user:
       name: teste
       password: teste
-    ignored: /**
   flyway:
     user: root
     password: root
