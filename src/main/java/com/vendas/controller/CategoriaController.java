@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
@@ -27,6 +29,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/v1/categoria")
+@Api(value = "categoria")
 public class CategoriaController {
     
     @Autowired
@@ -35,6 +38,7 @@ public class CategoriaController {
     @Autowired
     private CategoriaMapper categoriaMapper;
 
+    @ApiOperation(value = "Retorna uma lista de categoria")
     @GetMapping("/listar")
     public ResponseEntity<List<CategoriaCreationDTO>> listar() {
         return ResponseEntity.status(HttpStatus.OK).body(categoriaMapper.toListCategoriaCreationDTOs(categoriaService.findAll()));

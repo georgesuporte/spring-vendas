@@ -6,6 +6,7 @@ import java.util.Optional;
 import com.vendas.entity.ClienteEntity;
 import com.vendas.implement.cliente.ClienteMapper;
 import com.vendas.model.dto.cliente.ClienteCreationDTO;
+import com.vendas.model.dto.cliente.ClienteResponseDTO;
 import com.vendas.model.dto.cliente.ClienteUpdateDTO;
 import com.vendas.service.ClienteService;
 
@@ -30,7 +31,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/api/v1/cliente")
 public class ClienteController {
-    
+
     @Autowired
     private ClienteService clienteService;
 
@@ -42,7 +43,8 @@ public class ClienteController {
 
     @GetMapping("/listar")
     public ResponseEntity<List<ClienteCreationDTO>> listar() {
-        return ResponseEntity.status(HttpStatus.OK).body(clienteMapper.toListClienteCreationDTOs(clienteService.findAll()));
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(clienteMapper.toListClienteCreationDTOs(clienteService.findAll()));
     }
 
     @GetMapping("/consultar")
@@ -58,14 +60,14 @@ public class ClienteController {
 
     @PostMapping("/pesquisar")
     public ResponseEntity<List<ClienteCreationDTO>> search(@RequestBody ClienteCreationDTO clienteCreationDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(clienteMapper.toListClienteCreationDTOs(
-                clienteService.findByNomeContainingOrEmailContaining(clienteCreationDTO.getNome(),clienteCreationDTO.getEmail())));
+        return ResponseEntity.status(HttpStatus.CREATED).body(clienteMapper.toListClienteCreationDTOs(clienteService
+                .findByNomeContainingOrEmailContaining(clienteCreationDTO.getNome(), clienteCreationDTO.getEmail())));
     }
 
     @PostMapping(value = "/cadastrar")
-    public ResponseEntity<ClienteCreationDTO> cadastrar(@RequestBody ClienteCreationDTO clienteCreationDTO) {
+    public ResponseEntity<ClienteResponseDTO> cadastrar(@RequestBody ClienteCreationDTO clienteCreationDTO) {
         clienteCreationDTO.setSenha(passwordEncoder.encode(clienteCreationDTO.getSenha()));
-        return ResponseEntity.status(HttpStatus.CREATED).body(clienteMapper.toClienteCreationDTO(
+        return ResponseEntity.status(HttpStatus.CREATED).body(clienteMapper.toClienteResponseDTO(
                 clienteService.save(clienteMapper.toClienteEntity(clienteCreationDTO))));
     }
 

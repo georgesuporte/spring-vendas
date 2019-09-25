@@ -14,7 +14,7 @@ ARG gid=1000
 # =============================================================================
 # Set environment
 # =============================================================================
-ARG JAVA_HOME_DOCKER=/opt/java/current
+ARG JAVA_HOME_DOCKER
 ENV PATH ${PATH}:${JAVA_HOME_DOCKER}/bin
 # =============================================================================
 # Install package linux Dependency 
@@ -58,13 +58,6 @@ RUN mkdir -p /opt/java \
     && ln -s /opt/java/jdk-11.0.4 /opt/java/current \
     && touch /etc/profile.d/java.sh | echo export JAVA_HOME=${JAVA_HOME_DOCKER} >> /etc/profile.d/java.sh | echo export PATH=${PATH} >> /etc/profile.d/java.sh \
     && sh /etc/profile.d/java.sh
-
-# =============================================================================
-# Config Java
-# =============================================================================
-# RUN update-java-alternatives -s java-8-oracle
-# RUN echo "export ${PATH}" >> ~/.bashrc
-# RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # =============================================================================
 # Clear Folder Tmp

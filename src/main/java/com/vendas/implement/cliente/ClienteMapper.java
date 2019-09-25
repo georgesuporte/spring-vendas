@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.vendas.entity.ClienteEntity;
 import com.vendas.model.dto.cliente.ClienteCreationDTO;
+import com.vendas.model.dto.cliente.ClienteResponseDTO;
 import com.vendas.model.dto.cliente.ClienteUpdateDTO;
 import com.vendas.model.dto.cliente.ClienteUpdatePasswordDTO;
 
@@ -29,6 +30,11 @@ public interface ClienteMapper {
     })
     ClienteUpdateDTO toClienteUpdateDTO(ClienteEntity clienteEntity);
 
+    @Mappings({
+        @Mapping(target="id", source="clienteEntity.idCliente"),
+    })
+    ClienteResponseDTO toClienteResponseDTO(ClienteEntity clienteEntity);
+    
     @Mappings({
         @Mapping(target="idCliente", source="clienteUpdateDTO.id"),
     })
