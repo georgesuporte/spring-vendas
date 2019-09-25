@@ -187,6 +187,7 @@ Para criar  a rede_vendas no docker, execute o script abaixo:
 ```sh
 $ sh create-network.sh
 ```
+*Obs*.:  Criar dentro a pasta jdk dentro de .docker/. Baixar através do site oracle o arquivo jdk-11.0.4_linux-x64_bin.tar.gz.
 
 #### Properties Yml
 ```sh
