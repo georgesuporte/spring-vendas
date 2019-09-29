@@ -1,7 +1,9 @@
 package com.vendas.model.dto.cliente;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.vendas.model.dto.endereco.EnderecoCreationDTO;
 
 import lombok.Data;
 
@@ -13,6 +15,6 @@ public class ClienteCreationDTO {
     private String nome;
     private String email;
     private String senha;
+    private List<EnderecoCreationDTO> endereco;
      
-
 }

@@ -3,8 +3,8 @@ package com.vendas.model.dto.endereco;
 import lombok.Data;
 
 @Data
-public class EnderecoDto {
-
+public class EnderecoResponseDTO {
+    private Long id;
     private String rua;
     private String bairro;
     private String cep;

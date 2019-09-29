@@ -20,15 +20,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
 
-@ToString
+
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name="cliente")
 public class ClienteEntity implements Serializable {

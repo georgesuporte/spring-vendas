@@ -1,7 +1,10 @@
 package com.vendas.service;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+
+import javax.transaction.Transactional;
 
 import com.vendas.entity.EnderecoEntity;
 import com.vendas.repository.EnderecoRespository;
@@ -31,4 +34,12 @@ public class EnderecoService {
     public void deleteById(Long id) {
         EnderecoRespository.deleteById(id);
     }
+
+	public List<EnderecoEntity> findByRuaContainingOrBairroContaining(String rua, String bairro) {
+		return EnderecoRespository.findByRuaContainingOrBairroContaining(rua, bairro);
+	}
+    @Transactional(rollbackOn = { Exception.class })
+	public List<EnderecoEntity> saveAll(Collection<EnderecoEntity> enderecoList) {
+		return EnderecoRespository.saveAll(enderecoList);
+	}
 }

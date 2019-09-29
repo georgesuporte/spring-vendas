@@ -1,5 +1,6 @@
 package com.vendas.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
@@ -18,12 +19,23 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
+@ToString
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name="endereco")
-public class EnderecoEntity {
+public class EnderecoEntity implements Serializable  {
+
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
 
     @Id
     @Column(name="id")
@@ -53,10 +65,13 @@ public class EnderecoEntity {
     @Column(name="created")
     @JsonIgnore
     @CreationTimestamp
-    private final Date  createdAt;
+    private  Date  createdAt;
 
     @Column(name="modified")
     @JsonIgnore
     @UpdateTimestamp
-    private final Date  updatedAt;
+    private Date  updatedAt;
+
+	void setId(Long id) {
+	}
 }
