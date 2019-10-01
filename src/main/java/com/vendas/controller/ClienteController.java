@@ -1,5 +1,7 @@
 package com.vendas.controller;
 
+import java.util.List;
+
 import com.vendas.model.dto.cliente.ClienteCreationDTO;
 import com.vendas.model.dto.cliente.ClienteResponseDTO;
 import com.vendas.service.ClienteService;
@@ -8,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,11 +32,11 @@ public class ClienteController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    // @GetMapping("/listar")
-    // public ResponseEntity<List<ClienteCreationDTO>> listar() {
-    //     return ResponseEntity.status(HttpStatus.OK)
-    //             .body(clienteMapper.toListClienteCreationDTOs(clienteService.findAll()));
-    // }
+    @GetMapping("/listar")
+    public ResponseEntity<List<ClienteResponseDTO>> listar() {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(clienteService.findAll());
+    }
 
     // @GetMapping("/consultar")
     // public ResponseEntity<ClienteCreationDTO> consultar(@RequestBody ClienteCreationDTO clienteCreationDTO) {

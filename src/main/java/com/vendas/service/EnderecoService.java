@@ -4,18 +4,21 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-import javax.transaction.Transactional;
+import javax.persistence.RollbackException;
 
 import com.vendas.entity.EnderecoEntity;
 import com.vendas.repository.EnderecoRespository;
 
+import org.hibernate.service.spi.ServiceException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 
 @Service
+@Transactional
 public class EnderecoService {
     private final EnderecoRespository EnderecoRespository;
 
@@ -38,8 +41,12 @@ public class EnderecoService {
 	public List<EnderecoEntity> findByRuaContainingOrBairroContaining(String rua, String bairro) {
 		return EnderecoRespository.findByRuaContainingOrBairroContaining(rua, bairro);
 	}
-    @Transactional(rollbackOn = { Exception.class })
+    @Transactional(rollbackFor =ServiceException.class)
 	public List<EnderecoEntity> saveAll(Collection<EnderecoEntity> enderecoList) {
-		return EnderecoRespository.saveAll(enderecoList);
+        try {
+            return EnderecoRespository.saveAll(enderecoList);
+        } catch (Exception e) {
+            throw new RollbackException("Erro ao cadastrar cliente. Exception:[" + e.getMessage() + "]"); 
+        }
 	}
 }

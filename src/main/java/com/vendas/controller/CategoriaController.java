@@ -48,7 +48,7 @@ public class CategoriaController {
     public ResponseEntity<CategoriaCreationDTO> consultar(@RequestBody CategoriaCreationDTO categoriaID) {
         Optional<CategoriaEntity> result = categoriaService
                 .findById(categoriaMapper.toCategoriaEntity(categoriaID).getIdCategoria());
-        if (result.get() != null) {
+        if (result.get().getCategoria().length() > 0) {
             return ResponseEntity.status(HttpStatus.OK).body(categoriaMapper.toCategoriaCreationDTO(result.get()));
         } else {
             return ResponseEntity.status(HttpStatus.CREATED).build();

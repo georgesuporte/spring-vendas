@@ -12,18 +12,18 @@ import com.vendas.implement.endereco.EnderecoMapper;
 import com.vendas.model.dto.cliente.ClienteCreationDTO;
 import com.vendas.model.dto.cliente.ClienteResponseDTO;
 import com.vendas.repository.ClienteRespository;
-import com.vendas.service.EnderecoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionException;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
 
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Service
+@Transactional
 public class ClienteService {
     @Autowired
     private final ClienteRespository clienteRespository;
@@ -37,32 +37,34 @@ public class ClienteService {
     @Autowired
     private EnderecoMapper enderecoMapper;
 
-    public List<ClienteEntity> findAll() {
-        return clienteRespository.findAll();
+    public List<ClienteResponseDTO> findAll() {
+        return clienteMapper.toListClienteResponseDTOs(clienteRespository.findAll());
     }
 
     public Optional<ClienteEntity> findById(Long id) {
         return clienteRespository.findById(id);
     }
-    
-    @Transactional(rollbackFor={Exception.class}, readOnly = false, propagation = Propagation.REQUIRED)
+
+    @Transactional(rollbackFor = { TransactionException.class }, propagation = Propagation.REQUIRED)
     public ClienteResponseDTO save(ClienteCreationDTO clienteCreationDTO) {
         try {
             ClienteEntity clienteEntity = clienteMapper.toEntity(clienteCreationDTO);
-            ClienteEntity createdClienteEntity  = clienteRespository.save(clienteEntity);
-            if(clienteCreationDTO.getEndereco().size() > 0){
+            ClienteEntity createdClienteEntity = clienteRespository.save(clienteEntity);
+            if (clienteCreationDTO.getEndereco().size() > 0) {
                 clienteCreationDTO.getEndereco().forEach(EnderecoCreationDTO -> {
                     EnderecoCreationDTO.setIdCliente(createdClienteEntity);
                 });
-                List<EnderecoEntity> enderecoCreate = enderecoService.saveAll(enderecoMapper.toEntity(clienteCreationDTO.getEndereco()));
-                ClienteResponseDTO dto = clienteMapper.toClienteResponseDTO(createdClienteEntity);
-                dto.setEndereco(enderecoMapper.toListEnderecoResponseDTO(enderecoMapper.toDto(enderecoCreate)));
-                return dto;
+                List<EnderecoEntity> enderecoCreate = enderecoService
+                        .saveAll(enderecoMapper.toEntity(clienteCreationDTO.getEndereco()));
+                ClienteResponseDTO clienteResponseDTO = clienteMapper.toClienteResponseDTO(createdClienteEntity);
+                clienteResponseDTO
+                        .setEndereco(enderecoMapper.toListEnderecoResponseDTO(enderecoMapper.toDto(enderecoCreate)));
+                return clienteResponseDTO;
             } else {
                 return clienteMapper.toClienteResponseDTO(clienteEntity);
             }
-            
-         } catch (Exception e) {
+
+        } catch (Exception e) {
             throw new RollbackException("Erro ao cadastrar cliente. Exception:[" + e.getMessage() + "]"); 
 		}
     }

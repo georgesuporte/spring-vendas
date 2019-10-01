@@ -39,7 +39,7 @@ public class EnderecoEntity implements Serializable  {
 
     @Id
     @Column(name="id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long  idEndereco;
 
     @NotNull

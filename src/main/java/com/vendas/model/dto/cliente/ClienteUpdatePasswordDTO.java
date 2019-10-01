@@ -9,6 +9,6 @@ import lombok.Data;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Data
 public class ClienteUpdatePasswordDTO {
-    private Long id;
+    private Long idCliente;
     private String senha;
 }

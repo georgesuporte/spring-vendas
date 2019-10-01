@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class EnderecoResponseDTO {
-    private Long id;
+    private Long idEndereco;
     private String rua;
     private String bairro;
     private String cep;

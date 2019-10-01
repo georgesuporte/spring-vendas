@@ -11,7 +11,7 @@ import lombok.Data;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Data
 public class ClienteResponseDTO {
-    private Long id;
+    private Long idCliente;
     private String nome;
     private String email;
     private List<EnderecoResponseDTO> endereco;

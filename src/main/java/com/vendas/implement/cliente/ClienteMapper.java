@@ -22,40 +22,24 @@ public interface ClienteMapper extends IEntityMapper<ClienteCreationDTO, Cliente
     ClienteMapper INSTANCE = Mappers.getMapper(ClienteMapper.class);
 
     @Mappings({
-        @Mapping(source = "clienteEntity.idCliente", target = "id"),
         @Mapping(source = "clienteEntity.idEndereco", target = "endereco")
     })
     ClienteCreationDTO toDto(final ClienteEntity clienteEntity);
 
-    // @Mappings({
-    //     @Mapping(source = "clienteCreationDTO.endereco", target = "idEndereco")
-    // })
     ClienteEntity toEntity(final ClienteCreationDTO clienteCreationDTO);
 
-    @Mappings({
-        @Mapping(target="id", source="clienteEntity.idCliente")
-    })
     ClienteUpdateDTO toClienteUpdateDTO(ClienteEntity clienteEntity);
 
-    @Mappings({
-        @Mapping(target="idCliente", source="clienteUpdateDTO.id"),
-    })
     ClienteEntity toUpdateClienteEntity(ClienteUpdateDTO clienteUpdateDTO);
 
-    @Mappings({
-        @Mapping(target="idCliente", source="clienteUpdatePasswordDTO.id"),
-    })
     ClienteEntity toUpdatePasswordClienteEntity(ClienteUpdatePasswordDTO clienteUpdatePasswordDTO);
 
     @Mappings({
-        @Mapping(source="clienteEntity.idCliente", target="id"),
+        @Mapping(source = "clienteEntity.idEndereco", target = "endereco")
     })
     ClienteResponseDTO toClienteResponseDTO(ClienteEntity clienteEntity);
 
-    // @Mappings({
-    //     @Mapping(source="clienteEntity.idCliente", target="id"),
-    //     @Mapping(source = "clienteEntity.idEndereco", target = "endereco")
-    // })
+ 
     List<ClienteResponseDTO> toListClienteResponseDTOs(List<ClienteEntity> listClienteEntity);
 
 

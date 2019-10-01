@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class EnderecoCreationDTO {
-    private Long id;
+    private Long idEndereco;
     private ClienteEntity idCliente;
     private String rua;
     private String bairro;
