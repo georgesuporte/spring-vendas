@@ -15,7 +15,13 @@ ARG gid=1000
 # Set environment
 # =============================================================================
 ARG JAVA_HOME_DOCKER
+ARG MAVEN 
+ARG USER_HOME_DIR="/root"
+
 ENV PATH ${PATH}:${JAVA_HOME_DOCKER}/bin
+ENV MAVEN_HOME = ${MAVEN}
+ENV MAVEN_CONFIG "$USER_HOME_DIR/.m2"
+
 # =============================================================================
 # Install package linux Dependency 
 # =============================================================================
@@ -29,7 +35,9 @@ RUN apk update \
     bzip2 \
     zlib-dev \
     ca-certificates \
-    paxctl 
+    paxctl \
+    git \
+    openssh-client
 
 # =============================================================================
 # Install glibc-2.29
@@ -59,11 +67,37 @@ RUN mkdir -p /opt/java \
     && touch /etc/profile.d/java.sh | echo export JAVA_HOME=${JAVA_HOME_DOCKER} >> /etc/profile.d/java.sh | echo export PATH=${PATH} >> /etc/profile.d/java.sh \
     && sh /etc/profile.d/java.sh
 
+
+# Config maven
+ADD mvn/ /tmp/
+RUN tar -xvzf /tmp/apache-maven-3.6.2-bin.tar.gz -C /opt/ \
+    && touch /etc/profile.d/maven.sh | echo export M2_HOME=${MAVEN} >> /etc/profile.d/maven.sh | echo export PATH=${MAVEN}/bin >> /etc/profile.d/maven.sh \
+    && sh /etc/profile.d/maven.sh \
+    && ln -s ${MAVEN}/bin/mvn /usr/bin/mvn
+
+# Config git
+ADD .ssh/ /root/.ssh/
+RUN chmod 600 -R /root/.ssh/
+RUN cd /tmp \
+    && git clone git@github.com:georgesuporte/spring-vendas.git
+# Generate package  war
+RUN cd /tmp/spring-vendas/ \
+    && mvn package
+# && mvn clean install \
+
+# RUN mkdir -p /opt/app 
+
+# RUN cp /tmp/spring-vendas/target/*.war /opt/app
+
+EXPOSE 8080
+
+
 # =============================================================================
 # Clear Folder Tmp
 # =============================================================================
-RUN rm -rf /tmp/*
+# RUN rm -rf /tmp/*
+# RUN rm -rf ${MAVEN_CONFIG}/*
 
 WORKDIR /
-ENTRYPOINT ["/bin/sh", "-c", "bash"]
-CMD ["/bin/sh"]
+# ENTRYPOINT ["/bin/sh", "-c", "bash"]
+CMD ["java -jar /tmp/spring-vendas/target/spring-vendas-0.0.1-SNAPSHOT.war"]
